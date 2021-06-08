@@ -120,7 +120,7 @@ public protocol ESPBLEDelegate {
     private var retryScan = false
     
     /// Get name of current `ESPDevice`.
-    public var name:String {
+    @objc public var name:String {
         return deviceName
     }
 

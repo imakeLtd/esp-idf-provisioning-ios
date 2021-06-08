@@ -22,10 +22,18 @@ import SwiftProtobuf
 
 /// Type that represent a single Wi-Fi network.
 /// Array of this object is returned when scan Wi-Fi command is given to ESPDevice.
-public struct ESPWifiNetwork {
-
+@objc class ESPWifiNetwork : NSObject {
+    
+    init(ssid: String, channel: UInt32, rssi: Int32, bssid: Data, auth: Espressif_WifiAuthMode, unknownFields: Any) {
+        self.ssid = ssid
+        self.channel = channel
+        self.rssi = rssi
+        self.bssid = bssid
+        self.auth = auth
+    }
+    
     /// The name of wireless network.
-    public var ssid: String = ""
+    @objc public var ssid: String = ""
     /// The numbers of Wi-Fi channel.
     public var channel: UInt32 = 0
     /// Number indicating the signal strength of wireless network.
@@ -36,4 +44,5 @@ public struct ESPWifiNetwork {
     public var auth: Espressif_WifiAuthMode = .open
     /// Contains uncategorized additional info of wireless network.
     public var unknownFields = SwiftProtobuf.UnknownStorage()
+    
 }
