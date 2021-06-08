@@ -22,15 +22,15 @@ import CoreBluetooth
 import AVFoundation
 
 /// Supported mode of communication with device.
-public enum ESPTransport {
+@objc public enum ESPTransport: Int {
     /// Communicate using bluetooth.
-    case ble
+    case ble = 0
     /// Communicate using Soft Access Point.
-    case softap
+    case softap = 1
 }
 
 /// Security options on data transmission.
-public enum ESPSecurity: Int {
+@objc public enum ESPSecurity: Int {
     /// Unsecure data transmission.
     case unsecure = 0
     /// Data is encrypted before transmission.
@@ -39,7 +39,7 @@ public enum ESPSecurity: Int {
 
 /// The `ESPProvisionManager` class is a singleton class. It provides methods for getting `ESPDevice` object.
 /// Provide option to
-public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelegate {
+@objc public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelegate {
     
     private var espDevices:[ESPDevice] = []
     private var espBleTransport:ESPBleTransport!
@@ -52,7 +52,7 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
     private var previewLayer: AVCaptureVideoPreviewLayer?
     
     /// Member to access singleton object of class.
-    public static let shared = ESPProvisionManager()
+    @objc public static let shared = ESPProvisionManager()
     
     private override init() {
         
@@ -69,7 +69,7 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
     ///                        of search is returned as parameter of this function. When search is successful
     ///                        array of found devices are returned. When search fails then reaon for failure is
     ///                        returned as `ESPDeviceCSSError`.
-    public func searchESPDevices(devicePrefix: String,transport: ESPTransport, security:ESPSecurity = .secure, completionHandler: @escaping ([ESPDevice]?,ESPDeviceCSSError?) -> Void) {
+    @objc public func searchESPDevices(devicePrefix: String,transport: ESPTransport, security:ESPSecurity = .secure, completionHandler: @escaping ([ESPDevice]?,Any?) -> Void) {
         
         ESPLog.log("Search ESPDevices called.")
         
@@ -88,14 +88,14 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
                 espBleTransport.scan(delegate: self)
             case .softap:
                 ESPLog.log("ESP SoftAp Devices search is not yet supported in iOS.")
-                completionHandler(nil,.softApSearchNotSupported)
+                completionHandler(nil,ESPDeviceCSSError.softApSearchNotSupported)
         }
         
     }
     
     /// Stops searching for Bluetooth devices. Not applicable for SoftAP device type.
     /// Any intermediate search result will be ignored. Delegate for peripheralsNotFound is called.
-    public func stopESPDevicesSearch() {
+    @objc public func stopESPDevicesSearch() {
         ESPLog.log("Stop ESPDevices search called.")
         espBleTransport.stopSearch()
     }
@@ -124,7 +124,7 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
     
     /// Stop camera session that is capturing QR code. Call this method when your `Scan View` goes out of scope.
     ///
-    public func stopScan() {
+    @objc public func stopScan() {
         ESPLog.log("Stopping Camera Session..")
         if self.captureSession != nil {
             self.captureSession.stopRunning()
@@ -135,7 +135,7 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
     ///
     /// - Parameter completionHandler: The completion handler is called when refresh is completed. Result
     ///                                of refresh is returned as parameter of this function.
-    public func refreshDeviceList(completionHandler: @escaping ([ESPDevice]?,ESPDeviceCSSError?) -> Void) {
+    @objc public func refreshDeviceList(completionHandler: @escaping ([ESPDevice]?,Any?) -> Void) {
         searchESPDevices(devicePrefix: self.devicePrefix, transport: self.transport, security: self.security, completionHandler: completionHandler)
     }
     
@@ -287,7 +287,7 @@ public class ESPProvisionManager: NSObject, AVCaptureMetadataOutputObjectsDelega
     /// Method to enable/disable library logs.
     ///
     /// - Parameter enable: Bool to enable/disable console logs`.
-    public func enableLogs(_ enable: Bool) {
+    @objc public func enableLogs(_ enable: Bool) {
         ESPLog.isLogEnabled = enable
     }
 }
