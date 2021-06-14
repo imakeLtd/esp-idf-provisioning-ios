@@ -30,6 +30,7 @@ import SwiftProtobuf
         self.rssi = rssi
         self.bssid = bssid
         self.auth = auth
+        self.auth_ns = Espressif_WifiAuthMode_NS(rawValue: auth.rawValue) ?? Espressif_WifiAuthMode_NS.open;
     }
     
     /// The name of wireless network.
@@ -42,6 +43,8 @@ import SwiftProtobuf
     @objc public var bssid: Data = SwiftProtobuf.Internal.emptyData
     /// The authorisation mode of wireless network.
     public var auth: Espressif_WifiAuthMode = .open
+    /// Nativescript readable auth
+    @objc public var auth_ns:Espressif_WifiAuthMode_NS = .open
     /// Contains uncategorized additional info of wireless network.
     public var unknownFields = SwiftProtobuf.UnknownStorage()
     

@@ -119,6 +119,16 @@ enum Espressif_WifiConnectFailedReason: SwiftProtobuf.Enum {
 
 #endif // swift(>=4.2)
 
+
+@objc public enum Espressif_WifiAuthMode_NS: Int {
+    case open = 0
+    case wep = 1
+    case wpaPsk = 2
+    case wpa2Psk = 3
+    case wpaWpa2Psk = 4
+    case wpa2Enterprise = 5
+}
+
 public enum Espressif_WifiAuthMode: SwiftProtobuf.Enum {
     public typealias RawValue = Int
     case open // = 0
