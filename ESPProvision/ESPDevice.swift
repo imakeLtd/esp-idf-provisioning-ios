@@ -232,9 +232,9 @@ public protocol ESPBLEDelegate {
     ///     - data: Data to be sent to device.
     ///     - completionHandler: The completion handler that is called when data transmission is successful.
     ///                          Parameter of block include response received from the HTTP request or error if any.
-    public func sendData(path:String, data:Data, completionHandler: @escaping (Data?, ESPSessionError?) -> Swift.Void) {
+    @objc public func sendData(path:String, data:Data, completionHandler: @escaping (Data?, Any?) -> Swift.Void) {
         if session == nil || !session.isEstablished {
-            completionHandler(nil,.sessionNotEstablished)
+            completionHandler(nil,ESPSessionError.sessionNotEstablished)
         } else {
             self.sendDataToDevice(path: path, data: data, retryOnce: true, completionHandler: completionHandler)
         }
