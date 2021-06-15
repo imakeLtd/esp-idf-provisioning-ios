@@ -541,7 +541,7 @@ public protocol ESPBLEDelegate {
     // Get device custom-data:
     ///
     /// - Parameter completionHandler: Invoked when error is encountered while getting device version.
-    private func getDeviceCustomData() {
+    @objc public func getDeviceCustomData() {
         switch transport {
         case .ble:
             ESPLog.log("Get Device Custom Data")
@@ -636,7 +636,6 @@ extension ESPDevice: ESPBLEStatusDelegate {
     func peripheralConnected() {
         ESPLog.log("Peripheral connected.")
         self.getDeviceVersionInfo(completionHandler: bleConnectionStatusHandler!)
-        self.getDeviceCustomData()
         bleDelegate?.peripheralConnected()
     }
     
