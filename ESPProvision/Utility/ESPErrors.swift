@@ -77,7 +77,6 @@ public enum ESPSessionError: ESPError {
     case securityMismatch
     /// The attempt to get version information from ESPDevice failed with underlying error.
     case versionInfoError(Error)
-    case customDataError(Error)
     /// The attempt to connect with ESPDevice of bluetooth capability failed.
     case bleFailedToConnect
     /// Encryption error
@@ -97,8 +96,6 @@ public enum ESPSessionError: ESPError {
             return "Security applied for communicating with device does not match configuration setting"
         case .versionInfoError(let error):
             return "Failed to get device version information with error: \(error.localizedDescription)"
-        case .customDataError(let error):
-            return "Failed to get custom data information with error: \(error.localizedDescription)"
         case .bleFailedToConnect:
             return "Failed to connect with BLE device"
         case .encryptionError:
@@ -124,8 +121,6 @@ public enum ESPSessionError: ESPError {
             return 17
         case .encryptionError:
             return 18
-        case .customDataError:
-            return 19
         }
     }
 }
