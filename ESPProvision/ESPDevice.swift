@@ -29,38 +29,6 @@ public enum ESPSessionStatus {
     case failedToConnect(ESPSessionError)
     /// Device disconnected.
     case disconnected
-    
-    public var toNS: ESPSessionStatus_NS {
-        switch self {
-        case .connected:
-            return ESPSessionStatus_NS.connected
-        case .failedToConnect:
-            return ESPSessionStatus_NS.failedToConnect
-        case .disconnected:
-            return ESPSessionStatus_NS.disconnected
-        }
-    }
-}
-
-/// Type encapsulates session status of device. for Nativescript
-@objc public enum ESPSessionStatus_NS: Int {
-    /// Device is connected and ready for data transmission.
-    case connected = 0
-    /// Failed to establish communication with device.
-    case failedToConnect = 1
-    /// Device disconnected.
-    case disconnected = 2
-    
-    public func fromNS(src: ESPSessionStatus) -> ESPSessionStatus_NS {
-        switch src {
-        case ESPSessionStatus.connected:
-            return ESPSessionStatus_NS.connected
-        case ESPSessionStatus.failedToConnect:
-            return ESPSessionStatus_NS.failedToConnect
-        case ESPSessionStatus.disconnected:
-            return ESPSessionStatus_NS.disconnected
-        }
-    }
 }
 
 /// Type encapsulated provision status of device.
