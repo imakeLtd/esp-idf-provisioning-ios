@@ -107,7 +107,9 @@ public protocol ESPBLEDelegate {
     /// Security layer of device.
     public var securityLayer: ESPCodeable!
     /// Storing device version information
-    public var versionInfo:NSDictionary?
+    @objc public var versionInfo:NSDictionary?
+    /// Storing custom data information
+    @objc public var customData:NSDictionary?
     /// Store BLE delegate information
     public var bleDelegate: ESPBLEDelegate?
     /// Advertisement data for BLE device
@@ -536,6 +538,56 @@ public protocol ESPBLEDelegate {
         }
     }
     
+    // Get device custom-data:
+    ///
+    /// - Parameter completionHandler: Invoked when error is encountered while getting device version.
+    private func getDeviceCustomData() {
+        switch transport {
+        case .ble:
+            ESPLog.log("Get Device Custom Data")
+            espBleTransport.SendConfigData(path: espBleTransport.utility.customPath, data: Data("ESP".utf8)) { response, error in
+                self.processCustomDataResponse(response: response, error: error)
+            }
+        default:
+            ESPLog.log("default is empty")
+            
+        }
+    }
+    
+    /// Process response for custom datarequest.
+    ///
+    /// - Parameters:
+    ///     - response: Response received from version info request..
+    ///     - error: Error encountered if any.
+    ///     - completionHandler: Invoked when error is encountered while processing version information.
+    private func processCustomDataResponse(response: Data?, error: Error?) {
+        ESPLog.log("Process custom data start")
+        guard error == nil else {
+            ESPLog.log("Process custom data error")
+            self.connectionStatus = .failedToConnect(.customDataError(error!))
+//            completionHandler(self.connectionStatus)
+            return
+        }
+        do {
+            if let result = try JSONSerialization.jsonObject(with: response!, options: .mutableContainers) as? NSDictionary {
+                ESPLog.log("Process custom data success")
+                switch transport {
+                    case .ble:
+                        self.espBleTransport.utility.customVersionInfo = result
+                    default:
+                        self.espSoftApTransport.utility.customVersionInfo = result
+                }
+
+                self.customData = result
+                print("\(self.customData!)")
+
+            }
+        } catch {
+            ESPLog.log("Process custom data catch")
+            ESPLog.log(error.localizedDescription)
+        }
+    }
+    
     private func isNetworkDisconnected(error: Error) -> Bool {
         if let nserror = error as NSError? {
             if nserror.code == -1005 {
@@ -584,6 +636,7 @@ extension ESPDevice: ESPBLEStatusDelegate {
     func peripheralConnected() {
         ESPLog.log("Peripheral connected.")
         self.getDeviceVersionInfo(completionHandler: bleConnectionStatusHandler!)
+        self.getDeviceCustomData()
         bleDelegate?.peripheralConnected()
     }
     

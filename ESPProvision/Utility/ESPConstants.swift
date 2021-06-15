@@ -34,6 +34,8 @@ struct ESPConstants {
     static let configPath = "prov-config"
     /// Path for fetching version information.
     static let versionPath = "proto-ver"
+    /// Path for fetching custom data.
+    static let customPath = "custom-data"
     /// Path for giving scan command to device.
     static let scanPath = "prov-scan"
     /// Path for establishing session with device.

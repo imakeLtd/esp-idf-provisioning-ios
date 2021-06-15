@@ -153,6 +153,7 @@ class ESPWiFiManager {
                     var wifiList:[ESPWifiNetwork] = []
                         for item in [Espressif_WiFiScanResult](scanResult.values) {
                             let wifiNetwork = ESPWifiNetwork(ssid: String(decoding: item.ssid, as: UTF8.self), channel: item.channel, rssi: item.rssi, bssid: item.bssid, auth: item.auth, unknownFields: item.unknownFields)
+                            
                             wifiList.append(wifiNetwork)
                         }
                     if wifiList.isEmpty {

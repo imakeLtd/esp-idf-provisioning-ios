@@ -30,6 +30,8 @@ class ESPUtility {
     var configPath: String = ESPConstants.configPath
     /// The path used for fetching ESPDevice versions and other informations.
     var versionPath: String = ESPConstants.versionPath
+    /// The path used for fetching ESPDevice custom data.
+    var customPath: String = ESPConstants.customPath
     /// The path used for giving scan Wi-Fi scan command to ESPDevice and fetching related information.
     var scanPath: String = ESPConstants.scanPath
     /// The path used to esptablish session with an ESPDevice.
@@ -42,12 +44,14 @@ class ESPUtility {
     var configUUIDMap: [String: CBCharacteristic] = [:]
     /// Stores device version information.
     var deviceVersionInfo: NSDictionary?
+    var customVersionInfo: NSDictionary?
     
     /// Process and store descriptor values read from BLE devices.
     ///
     /// - Parameter descriptor: The CBDescriptor of a BLE characteristic.
     func processDescriptor(descriptor: CBDescriptor) {
         if let value = descriptor.value as? String {
+            print("descriptor.value as? String \(value)")
             if value.contains(ESPConstants.sessionPath) {
                 peripheralConfigured = true
                 sessionCharacteristic = descriptor.characteristic
