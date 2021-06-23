@@ -377,7 +377,7 @@ public protocol ESPBLEDelegate {
     }
     
     /// Disconnect `ESPDevice`.
-    public func disconnect() {
+    @objc public func disconnect() {
         ESPLog.log("Disconnecting device..")
         switch transport {
         case .ble:
