@@ -208,8 +208,6 @@ class ESPBleTransport: NSObject, ESPCommunicable {
                                      userInfo: nil,
                                      repeats: true)
             centralManager.scanForPeripherals(withServices: nil)
-        } else {
-            self.delegate?.bluetoothDisabled()
         }
     }
 
@@ -259,6 +257,7 @@ extension ESPBleTransport: CBCentralManagerDelegate {
             ESPLog.log("Bluetooth state unauthorized")
         case .poweredOff:
             ESPLog.log("Bluetooth state off")
+            delegate?.bluetoothDisabled()
         case .poweredOn:
             ESPLog.log("Bluetooth state on")
             isBLEEnabled = true
