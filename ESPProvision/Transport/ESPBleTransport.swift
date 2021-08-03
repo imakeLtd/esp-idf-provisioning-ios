@@ -54,6 +54,8 @@ protocol ESPBLETransportDelegate {
     ///
     /// - Parameter serviceUUID: the service UUID provided at the time of creating the BLETransport object
     func peripheralsNotFound(serviceUUID: UUID?)
+    
+    func bluetoothDisabled()
 
 }
 
