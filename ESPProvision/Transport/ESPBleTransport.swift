@@ -206,6 +206,8 @@ class ESPBleTransport: NSObject, ESPCommunicable {
                                      userInfo: nil,
                                      repeats: true)
             centralManager.scanForPeripherals(withServices: nil)
+        } else {
+            self.delegate?.bluetoothDisabled()
         }
     }
 

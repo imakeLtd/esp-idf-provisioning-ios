@@ -316,4 +316,11 @@ extension ESPProvisionManager: ESPBLETransportDelegate {
         self.searchCompletionHandler?(nil,.espDeviceNotFound)
         self.scanCompletionHandler?(nil,.espDeviceNotFound)
     }
+    
+    func bluetoothDisabled() {
+        
+        ESPLog.log("Bluetooth disabled on device.")
+        
+        self.searchCompletionHandler?(nil,.bluetoothDisabled)
+    }
 }

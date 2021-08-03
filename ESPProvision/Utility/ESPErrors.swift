@@ -145,6 +145,8 @@ public enum ESPDeviceCSSError: ESPError {
     case espDeviceNotFound
     /// SoftAp ESPDeivce search is not currently supported in iOS.
     case softApSearchNotSupported
+    /// bluetooth disabled
+    case bluetoothDisabled
     
     public var description: String {
         switch self {
@@ -164,6 +166,8 @@ public enum ESPDeviceCSSError: ESPError {
             return "No bluetooth device found with given prefix"
         case .softApSearchNotSupported:
             return "SoftAp device search is not currently supported in iOS"
+        case .bluetoothDisabled:
+            return "Device bluetooth functionality is disabled"
         }
     }
     
@@ -184,6 +188,8 @@ public enum ESPDeviceCSSError: ESPError {
         case .espDeviceNotFound:
             return 27
         case .softApSearchNotSupported:
+            return 28
+        case .bluetoothDisabled:
             return 28
         }
     }
