@@ -238,16 +238,16 @@ import AVFoundation
         ESPLog.log("Parsing QR code response...code:\(code)")
         
         if let jsonArray = try? JSONSerialization.jsonObject(with: Data(code.utf8), options: []) as? [String: String] {
-            if let deviceName = jsonArray["name"], let transportInfo = jsonArray["transport"] {
+            if let deviceName = jsonArray?["name"], let transportInfo = jsonArray?["transport"] {
                 if (transportInfo.lowercased() == "softap" || transportInfo.lowercased() == "ble"){
                     let transport:ESPTransport = transportInfo.lowercased() == "softap" ? .softap:.ble
-                    let security:ESPSecurity = jsonArray["security"] ?? "1" == "0" ? .unsecure:.secure
-                    let pop = jsonArray["pop"] ?? ""
+                    let security:ESPSecurity = jsonArray?["security"] ?? "1" == "0" ? .unsecure:.secure
+                    let pop = jsonArray?["pop"] ?? ""
                     switch transport {
                     case .ble:
                         createESPDevice(deviceName: deviceName, transport: transport, security: security, proofOfPossession: pop, completionHandler: self.scanCompletionHandler!)
                     default:
-                        createESPDevice(deviceName: deviceName, transport: transport, security: security, proofOfPossession: pop, softAPPassword: jsonArray["password"] ?? "", completionHandler: self.scanCompletionHandler!)
+                        createESPDevice(deviceName: deviceName, transport: transport, security: security, proofOfPossession: pop, softAPPassword: jsonArray?["password"] ?? "", completionHandler: self.scanCompletionHandler!)
                         
                     }
                     return
