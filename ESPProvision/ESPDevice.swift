@@ -178,28 +178,30 @@ public protocol ESPBLEDelegate {
             self.getDeviceVersionInfo(completionHandler: completionHandler)
         } else {
             ESPLog.log("Connecting phone to ESPDevice SoftAp.")
-            var hotSpotConfig: NEHotspotConfiguration
-            if softAPPassword == nil || softAPPassword! == "" {
-                hotSpotConfig = NEHotspotConfiguration(ssid: ssid)
-            } else {
-                hotSpotConfig = NEHotspotConfiguration(ssid: ssid, passphrase: softAPPassword!, isWEP: false)
-            }
-            hotSpotConfig.joinOnce = false
-            ESPLog.log("Applying Hotspot configuration")
-            NEHotspotConfigurationManager.shared.apply(hotSpotConfig) { error in
-                if error != nil {
-                    if error?.localizedDescription == "already associated." {
-                        ESPLog.log("SoftAp is already connected.")
-                        self.getDeviceVersionInfo(completionHandler: completionHandler)
-                        return
-                    }
-                    ESPLog.log("Failed to connect")
-                    self.connectionStatus = .failedToConnect(.softAPConnectionFailure)
-                    completionHandler(self.connectionStatus)
+            if #available(iOS 11.0, *) {
+                var hotSpotConfig: NEHotspotConfiguration
+                if softAPPassword == nil || softAPPassword! == "" {
+                    hotSpotConfig = NEHotspotConfiguration(ssid: ssid)
+                } else {
+                    hotSpotConfig = NEHotspotConfiguration(ssid: ssid, passphrase: softAPPassword!, isWEP: false)
                 }
-                ESPLog.log("Successfully conected to SoftAP.")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                    self.getDeviceVersionInfo(completionHandler: completionHandler)
+                hotSpotConfig.joinOnce = false
+                ESPLog.log("Applying Hotspot configuration")
+                NEHotspotConfigurationManager.shared.apply(hotSpotConfig) { error in
+                    if error != nil {
+                        if error?.localizedDescription == "already associated." {
+                            ESPLog.log("SoftAp is already connected.")
+                            self.getDeviceVersionInfo(completionHandler: completionHandler)
+                            return
+                        }
+                        ESPLog.log("Failed to connect")
+                        self.connectionStatus = .failedToConnect(.softAPConnectionFailure)
+                        completionHandler(self.connectionStatus)
+                    }
+                    ESPLog.log("Successfully conected to SoftAP.")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        self.getDeviceVersionInfo(completionHandler: completionHandler)
+                    }
                 }
             }
         }
@@ -383,7 +385,9 @@ public protocol ESPBLEDelegate {
         case .ble:
             espBleTransport.disconnect()
         default:
-            NEHotspotConfigurationManager.shared.removeConfiguration(forSSID: self.name)
+            if #available(iOS 11.0, *) {
+                NEHotspotConfigurationManager.shared.removeConfiguration(forSSID: self.name)
+            }
         }
         
     }
