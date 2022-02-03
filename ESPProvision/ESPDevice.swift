@@ -593,6 +593,7 @@ extension ESPDevice: ESPBLEStatusDelegate {
     
     func peripheralDisconnected(peripheral: CBPeripheral, error: Error?) {
         ESPLog.log("Peripheral disconnected.")
+        bleConnectionStatusHandler?(.disconnected)
         if self.peripheral.identifier.uuidString == peripheral.identifier.uuidString {
             bleDelegate?.peripheralDisconnected(peripheral: peripheral, error: error)
         }
