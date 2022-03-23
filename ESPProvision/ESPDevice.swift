@@ -65,7 +65,7 @@ public protocol ESPBLEDelegate {
 
 
 /// Class needs to conform to `ESPDeviceConnectionDelegate` protocol when trying to establish a connection.
-public protocol ESPDeviceConnectionDelegate {
+@objc public protocol ESPDeviceConnectionDelegate {
     /// Get Proof of possession for an `ESPDevice` from object conforming `ESPDeviceConnectionDelegate` protocol.
     ///
     /// - Parameters:
@@ -76,7 +76,7 @@ public protocol ESPDeviceConnectionDelegate {
 
 /// The `ESPDevice` class is the main inteface for managing a device. It encapsulates method and properties
 /// required to provision, connect and communicate with the device.
-open class ESPDevice {
+@objc open class ESPDevice : NSObject {
     
     /// Session instance of device.
     var session:ESPSession!
@@ -147,7 +147,7 @@ open class ESPDevice {
     /// - Parameters:
     ///   - delegate: Class conforming to `ESPDeviceConnectionDelegate` protocol.
     ///   - completionHandler: The completion handler returns status of connection with the device.
-    open func connect(delegate: ESPDeviceConnectionDelegate? = nil, completionHandler: @escaping (ESPSessionStatus) -> Void) {
+    @objc open func connect(delegate: ESPDeviceConnectionDelegate? = nil, completionHandler: @escaping (Any?) -> Void) {
         ESPLog.log("Connecting ESPDevice...")
         self.delegate = delegate
         switch transport {
@@ -275,7 +275,8 @@ open class ESPDevice {
                     if retryOnce, self.isNetworkDisconnected(error: error!) {
                                 DispatchQueue.main.async {
                                     ESPLog.log("Retrying sending data to custom path...")
-                                    self.connect { status in
+                                    self.connect { anyStatus in
+                                        let status = anyStatus as! ESPSessionStatus
                                         switch status {
                                         case .connected:
                                             self.sendDataToDevice(path: path, data: data, retryOnce: false, completionHandler: completionHandler)
@@ -308,10 +309,10 @@ open class ESPDevice {
     ///     - passPhrase: Password of home network.
     ///     - completionHandler: The completion handler that is called when provision is completed.
     ///                          Parameter of block include status of provision.
-    public func provision(ssid: String, passPhrase: String = "", completionHandler: @escaping (ESPProvisionStatus) -> Void) {
+    @objc public func provision(ssid: String, passPhrase: String = "", completionHandler: @escaping (Any) -> Void) {
         ESPLog.log("Provisioning started.. with ssid:\(ssid) and password:\(passPhrase)")
         if session == nil, !session.isEstablished {
-            completionHandler(.failure(.sessionError))
+            completionHandler(ESPProvisionStatus.failure(.sessionError))
         } else {
             provisionDevice(ssid: ssid, passPhrase: passPhrase, retryOnce: true, completionHandler: completionHandler)
         }
@@ -363,7 +364,8 @@ open class ESPDevice {
                 default:
                     if error != nil, self.isNetworkDisconnected(error: error!) {
                         DispatchQueue.main.async {
-                            self.connect { status in
+                            self.connect { anyStatus in
+                                let status = anyStatus as! ESPSessionStatus
                                 switch status {
                                 case .connected:
                                     self.provisionDevice(ssid: ssid, passPhrase: passPhrase, retryOnce: false, completionHandler: completionHandler)
@@ -400,7 +402,7 @@ open class ESPDevice {
     ///
     /// - Parameter completionHandler: The completion handler that is called when Wi-Fi list is scanned.
     ///                                Parameter of block include list of available Wi-Fi network or error in case of failure.
-    public func scanWifiList(completionHandler: @escaping ([ESPWifiNetwork]?,ESPWiFiScanError?) -> Void) {
+    @objc public func scanWifiList(completionHandler: @escaping ([Any]?,Any?) -> Void) {
         retryScan = true
         scanDeviceForWifiList(completionHandler: completionHandler)
     }
@@ -568,7 +570,8 @@ extension ESPDevice: ESPScanWifiListProtocol {
                 case .scanRequestError(let requestError):
                     if isNetworkDisconnected(error: requestError) {
                         DispatchQueue.main.async {
-                            self.connect { status in
+                            self.connect { anyStatus in
+                                let status = anyStatus as! ESPSessionStatus
                                 switch status {
                                 case .connected:
                                     self.scanDeviceForWifiList(completionHandler: self.wifiListCompletionHandler!)
