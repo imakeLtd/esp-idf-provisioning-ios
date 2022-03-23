@@ -141,7 +141,7 @@ class ESPProvision {
                             completionHandler(stationState, Espressif_WifiConnectFailedReason.UNRECOGNIZED(0), nil)
                         } else if stationState == .connecting {
                             ESPLog.log("Status: connecting.")
-                            sleep(5)
+                            sleep(1)
                             self.pollForWifiConnectionStatus(completionHandler: completionHandler)
                         } else {
                             ESPLog.log("Status: failed.")
