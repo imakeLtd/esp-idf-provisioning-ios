@@ -66,7 +66,7 @@
 		B36C550D24F7A5870D2A8184 /* Pods-ESPProvisionSample.softap.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESPProvisionSample.softap.xcconfig"; path = "Target Support Files/Pods-ESPProvisionSample/Pods-ESPProvisionSample.softap.xcconfig"; sourceTree = "<group>"; };
 		BE43C01EF1AC16134D8B9F8F /* Pods-ESPProvisionSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESPProvisionSampleTests.release.xcconfig"; path = "Target Support Files/Pods-ESPProvisionSampleTests/Pods-ESPProvisionSampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		EC84FE067C3D5E9CDC5AEF05 /* Pods-ESPProvisionSample.ble.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESPProvisionSample.ble.xcconfig"; path = "Target Support Files/Pods-ESPProvisionSample/Pods-ESPProvisionSample.ble.xcconfig"; sourceTree = "<group>"; };
-		F19AEB9B2498E66A0078E5A1 /* ESP PROV SAMPLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ESP PROV SAMPLE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F19AEB9B2498E66A0078E5A1 /* ESP PROV Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ESP PROV Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19AEB9E2498E66A0078E5A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F19AEBA02498E66A0078E5A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F19AEBA22498E66A0078E5A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 		F19AEB9C2498E66A0078E5A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F19AEB9B2498E66A0078E5A1 /* ESP PROV SAMPLE.app */,
+				F19AEB9B2498E66A0078E5A1 /* ESP PROV Debug.app */,
 				F19AEBB12498E66F0078E5A1 /* ESPProvisionSampleTests.xctest */,
 				F19AEBBC2498E66F0078E5A1 /* ESPProvisionSampleUITests.xctest */,
 			);
@@ -277,7 +277,7 @@
 			);
 			name = ESPProvisionSample;
 			productName = ESPProvisionSample;
-			productReference = F19AEB9B2498E66A0078E5A1 /* ESP PROV SAMPLE.app */;
+			productReference = F19AEB9B2498E66A0078E5A1 /* ESP PROV Debug.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F19AEBB02498E66F0078E5A1 /* ESPProvisionSampleTests */ = {
@@ -635,7 +635,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -690,7 +690,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -708,25 +708,26 @@
 				APP_DISPLAY_NAME = "ESP Prov";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "ESPProvisionSample/ESP BLE PROV.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				ESP_ALLOW_PREFIX_SEARCH = YES;
 				ESP_ALLOW_QR_CODE_SCAN = YES;
 				ESP_DEVICE_TYPE = Both;
+				ESP_DEVICE_USERNAME = wifiprov;
 				ESP_SECURITY_MODE = Secure;
 				ESP_SETTINGS_ENABLED = YES;
 				INFOPLIST_FILE = ESPProvisionSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.espressif.provsoftap;
-				PRODUCT_NAME = "ESP PROV SAMPLE";
-				PROVISIONING_PROFILE_SPECIFIER = "ESP SoftAP Provisioning With Capability";
+				PRODUCT_NAME = "ESP PROV Debug";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -740,25 +741,26 @@
 				APP_DISPLAY_NAME = "ESP Prov";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "ESPProvisionSample/ESP BLE PROV.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				ESP_ALLOW_PREFIX_SEARCH = YES;
 				ESP_ALLOW_QR_CODE_SCAN = YES;
 				ESP_DEVICE_TYPE = Both;
+				ESP_DEVICE_USERNAME = wifiprov;
 				ESP_SECURITY_MODE = Secure;
 				ESP_SETTINGS_ENABLED = YES;
 				INFOPLIST_FILE = ESPProvisionSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.espressif.provsoftap;
-				PRODUCT_NAME = "ESP PROV SAMPLE";
-				PROVISIONING_PROFILE_SPECIFIER = "ESP SoftAP Provisioning With Capability";
+				PRODUCT_NAME = "ESP PROV Release";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -773,7 +775,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				INFOPLIST_FILE = ESPProvisionSampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -796,7 +798,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				INFOPLIST_FILE = ESPProvisionSampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -897,7 +899,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -922,17 +924,18 @@
 				ESP_ALLOW_PREFIX_SEARCH = YES;
 				ESP_ALLOW_QR_CODE_SCAN = YES;
 				ESP_DEVICE_TYPE = BLE;
+				ESP_DEVICE_USERNAME = wifiprov;
 				ESP_SECURITY_MODE = Secure;
 				ESP_SETTINGS_ENABLED = YES;
 				INFOPLIST_FILE = ESPProvisionSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.espressif.provble;
-				PRODUCT_NAME = "ESP PROV SAMPLE";
+				PRODUCT_NAME = "ESP BLE Prov";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -948,7 +951,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				INFOPLIST_FILE = ESPProvisionSampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1028,7 +1031,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1053,17 +1056,18 @@
 				ESP_ALLOW_PREFIX_SEARCH = YES;
 				ESP_ALLOW_QR_CODE_SCAN = YES;
 				ESP_DEVICE_TYPE = SoftAP;
+				ESP_DEVICE_USERNAME = wifiprov;
 				ESP_SECURITY_MODE = Secure;
 				ESP_SETTINGS_ENABLED = YES;
 				INFOPLIST_FILE = ESPProvisionSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.espressif.provsoftap;
-				PRODUCT_NAME = "ESP PROV SAMPLE";
+				PRODUCT_NAME = "ESP SoftAP Prov";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1079,7 +1083,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWXF6GB4AV;
 				INFOPLIST_FILE = ESPProvisionSampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

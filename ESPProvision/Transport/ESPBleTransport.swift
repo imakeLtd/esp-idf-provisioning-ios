@@ -66,7 +66,6 @@ class ESPBleTransport: NSObject, ESPCommunicable {
     /// Instance of 'ESPUtility' class.
     var utility: ESPUtility
 
-    private var transportToken = DispatchSemaphore(value: 1)
     private var isBLEEnabled = false
     private var scanTimeout = 5.0
     private var readCounter = 0
@@ -74,6 +73,8 @@ class ESPBleTransport: NSObject, ESPCommunicable {
     
     /// Stores Proof of Possesion for a device.
     var proofOfPossession:String?
+    /// Store username for device
+    var username:String?
 
     
     var centralManager: CBCentralManager!
@@ -97,11 +98,12 @@ class ESPBleTransport: NSObject, ESPCommunicable {
     /// - Parameters:
     ///   - deviceNamePrefix: Device name prefix.
     ///   - scanTimeout: Timeout in seconds for which BLE scan should happen.
-    init(scanTimeout: TimeInterval, deviceNamePrefix: String, proofOfPossession:String? = nil) {
+    init(scanTimeout: TimeInterval, deviceNamePrefix: String, proofOfPossession:String? = nil, username: String? = nil) {
         ESPLog.log("Initalising BLE transport class with scan timeout \(scanTimeout)")
         self.scanTimeout = scanTimeout
         self.deviceNamePrefix = deviceNamePrefix
         self.proofOfPossession = proofOfPossession
+        self.username = username
         utility = ESPUtility()
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -120,8 +122,7 @@ class ESPBleTransport: NSObject, ESPCommunicable {
             completionHandler(nil, ESPTransportError.deviceUnreachableError("BLE device unreachable"))
             return
         }
-
-        transportToken.wait()
+        
         espressifPeripheral.writeValue(data, for: utility.sessionCharacteristic, type: .withResponse)
         currentRequestCompletionHandler = completionHandler
     }
@@ -141,14 +142,12 @@ class ESPBleTransport: NSObject, ESPCommunicable {
             completionHandler(nil, ESPTransportError.deviceUnreachableError("BLE device unreachable"))
             return
         }
-
-        transportToken.wait()
+        
         if let characteristic = utility.configUUIDMap[path] {
             espressifPeripheral.writeValue(data, for: characteristic, type: .withResponse)
             currentRequestCompletionHandler = completionHandler
         } else {
             completionHandler(nil,NSError(domain: "com.espressif.ble", code: 1, userInfo: [NSLocalizedDescriptionKey:"BLE characteristic does not exist."]))
-            transportToken.signal()
         }
     }
 
@@ -356,7 +355,6 @@ extension ESPBleTransport: CBPeripheralDelegate {
             }
             self.currentRequestCompletionHandler = nil
         }
-        transportToken.signal()
     }
 
     func peripheral(_: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error _: Error?) {
