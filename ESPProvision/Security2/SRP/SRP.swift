@@ -39,6 +39,7 @@ import CryptoKit
 ///   - group: `Group` parameters; default is 2048-bits group.
 ///   - algorithm: which `Digest.Algorithm` to use; default is SHA1.
 /// - Returns: salt (s) and verification key (v)
+@available(iOS 13.0, *)
 public func createSaltedVerificationKey<H: HashFunction>(
     using hashFunction: H.Type,
     group: Group = .N2048,
@@ -91,6 +92,7 @@ func pad(_ data: Data, to size: Int) -> Data {
     return Data(count: size - data.count) + data
 }
 
+@available(iOS 13.0, *)
 enum Implementation<HF: HashFunction> {
     // swiftlint:disable:next identifier_name
     static func H(_ data: Data) -> Data {

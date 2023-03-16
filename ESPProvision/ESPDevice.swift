@@ -521,8 +521,10 @@ public protocol ESPBLEDelegate {
     
     func initSecure2Session(sessionPath: String?, username: String, password: String, completionHandler: @escaping (ESPSessionStatus) -> Void) {
         ESPLog.log("Initialise session security 2")
-        securityLayer = ESPSecurity2(username: username, password: password)
-        initSession(sessionPath: sessionPath, completionHandler: completionHandler)
+        if #available(iOS 13.0, *) {
+            securityLayer = ESPSecurity2(username: username, password: password)
+            initSession(sessionPath: sessionPath, completionHandler: completionHandler)
+        }
     }
     
     func initSession(sessionPath: String?, completionHandler: @escaping (ESPSessionStatus) -> Void) {

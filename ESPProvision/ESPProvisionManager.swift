@@ -22,11 +22,11 @@ import CoreBluetooth
 import AVFoundation
 
 /// Supported mode of communication with device.
-@objc  public enum ESPTransport: String {
+@objc public enum ESPTransport: Int {
     /// Communicate using bluetooth.
     case ble = 0
     /// Communicate using Soft Access Point.
-    case softap
+    case softap = 1
     
     public init?(rawValue: String) {
         switch rawValue.lowercased() {
